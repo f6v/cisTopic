@@ -1,3 +1,5 @@
+lib_path <- "/data/gent/vo/000/gvo00027/multimodal_omics_GRN/lib2"
+
 #' Run Latent Dirichlet Allocation with a Collapsed Gibbs Sampler in a cisTopic object
 #'
 #' Run Latent Dirichlet Allocation with a Collapsed Gibbs Sampler in a given cisTopic object.
@@ -129,7 +131,7 @@ runCGSModels <- function(
       print('Exporting data...')
       cl <- makeCluster(nCores, type = "SOCK")
       registerDoSNOW(cl)
-      clusterEvalQ(cl, library(lda))
+      clusterEvalQ(cl, library(lda, lib=lib_path))
       clusterExport(cl, c("cellList", "regionList", "topic", "iterations", "burnin", "alpha", "beta", "tmp", ".lda.collapsed.gibbs.sampler_perTopic"), envir=environment())
       opts <- list(preschedule=TRUE)
       clusterSetRNGStream(cl, seed)
@@ -616,7 +618,7 @@ runWarpLDAModels <- function(
       print('Exporting data...')
       cl <- makeCluster(nCores, type = "SOCK")
       registerDoSNOW(cl)
-      clusterEvalQ(cl, library(text2vec))
+      clusterEvalQ(cl, library(text2vec, lib = lib_path))
       clusterExport(cl, c("input", ".runWarpLDA_perTopic", "tmp", "topic", "iterations", "alpha", "beta"), envir=environment())
       opts <- list(preschedule=TRUE)
       clusterSetRNGStream(cl, seed)
